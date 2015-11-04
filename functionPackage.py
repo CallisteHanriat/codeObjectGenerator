@@ -23,8 +23,8 @@ def writeDotH(oneObject) :
             return 1
         typeDeDonnee =  oneObject.attributes[i].rsplit(' ', 1)[0]
         att =  oneObject.attributes[i].rsplit(' ', 1)[1]
-        print "\t"+ "get"+ att+ "() const;\n"
-        print "\t"+ "set"+ att+ "("+ typeDeDonnee +" " + att +");\n"
+        print "\t"+ typeDeDonnee + " " + "get"+ att+ "() const;\n"
+        print "\t"+ "void set"+ att+ "("+ typeDeDonnee +" " + att +");\n"
         i = i+1
     print "\n};"
     return 0
