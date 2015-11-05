@@ -89,10 +89,23 @@ def writeGetterAndSetterBody(oneObject) :
         i = i+1
     return 0
 
+def writeFunctionsCpp(oneObject):
+    i = 0
+    while i<len(oneObject.publicFunctions):
+        if ' ' not in oneObject.publicFunctions[i]:
+            print "error for : ", oneObject.publicFunctions[i], "no specified type.\n"
+            return 1
+        typeDeDonnee =  oneObject.publicFunctions[i].rsplit(' ', 1)[0]
+        functionName = oneObject.publicFunctions[i].rsplit(' ', 1)[1]
+        print typeDeDonnee + " " + oneObject.className + "::" + functionName + "() {}\n"
+        i = i+1
+    return 0
+
 def writeDotCpp(oneObject):
     print "\n generation du code du .cpp\n\n\n"
-    print '#include "' + oneObject.className + '".h\n\n\n'
+    print '#include "' + oneObject.className + '.h"\n\n\n'
     print "//constructor\n"
     print oneObject.className + "() \n{}\n"
     rtn = writeGetterAndSetterBody(oneObject)
+    rtn+= writeFunctionsCpp(oneObject)
     return rtn

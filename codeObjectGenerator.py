@@ -23,6 +23,6 @@ def main():
     if(writeDotH(myClass) == 0):
         print "\n\n\n\n\n//End of printing H."
     if(writeDotCpp(myClass) == 0):
-        print "\n\n\n\n\n//End of printing H."
+        print "\n\n\n\n\n//End of printing Cpp."
 
 main()
