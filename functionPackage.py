@@ -24,8 +24,6 @@ def majFirstLetter(oneString) :
 
 def writeGetterAndSetter(oneObject) :
     i = 0
-    print "class ", oneObject.className, " :  { \n"
-    print "public : \n"
     while i<len(oneObject.attributes):
         if ' ' not in oneObject.attributes[i]:
             print "error for : ", oneObject.attributes[i], "no specified type.\n"
@@ -37,9 +35,25 @@ def writeGetterAndSetter(oneObject) :
         i = i+1
     return 0
 
+def writeFunctions(oneObject) :
+        i = 0
+        while i<len(oneObject.publicFunctions):
+            if ' ' not in oneObject.publicFunctions[i]:
+                print "error for : ", oneObject.publicFunctions[i], "no specified type.\n"
+                return 1
+            typeDeDonnee =  oneObject.publicFunctions[i].rsplit(' ', 1)[0]
+            functionName = oneObject.publicFunctions[i].rsplit(' ', 1)[1]
+            print "\t"+ typeDeDonnee + " " + functionName + "();\n"
+            i = i+1
+        return 0
+
 
 def writeDotH(oneObject) :
     print "\n generation du code du fichier .h\n\n\n"
+    print "class ", oneObject.className, " :  { \n"
+    print "public : \n"
     rtn = writeGetterAndSetter(oneObject)
+    print "\n"
+    rtn += writeFunctions(oneObject)
     print "\n};"
     return rtn
