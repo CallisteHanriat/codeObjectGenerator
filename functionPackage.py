@@ -11,20 +11,35 @@ def fillingLists(componant) :
     return attributes
 
 
+def majFirstLetter(oneString) :
+    j = 0
+    output = ""
+    for i in oneString:
+        if j==0 :
+            output += i.upper()
+        else :
+            output += i
+        j = j + 1
+    return output
 
-def writeDotH(oneObject) :
-    print "\n generation du code du fichier .h\n\n\n"
+def writeGetterAndSetter(oneObject) :
     i = 0
     print "class ", oneObject.className, " :  { \n"
     print "public : \n"
     while i<len(oneObject.attributes):
         if ' ' not in oneObject.attributes[i]:
-            print "error for function : ", oneObject.attributes[i], "no specified type.\n"
+            print "error for : ", oneObject.attributes[i], "no specified type.\n"
             return 1
         typeDeDonnee =  oneObject.attributes[i].rsplit(' ', 1)[0]
         att =  oneObject.attributes[i].rsplit(' ', 1)[1]
-        print "\t"+ typeDeDonnee + " " + "get"+ att+ "() const;\n"
-        print "\t"+ "void set"+ att+ "("+ typeDeDonnee +" " + att +");\n"
+        print "\t"+ typeDeDonnee + " " + "get"+ majFirstLetter(att)+ "() const;\n"
+        print "\t"+ "void set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" " + att +");\n"
         i = i+1
-    print "\n};"
     return 0
+
+
+def writeDotH(oneObject) :
+    print "\n generation du code du fichier .h\n\n\n"
+    rtn = writeGetterAndSetter(oneObject)
+    print "\n};"
+    return rtn
