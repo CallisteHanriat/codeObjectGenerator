@@ -61,9 +61,9 @@ def writePrivateAttrs(oneObject):
 
 def writeDotH(oneObject) :
     print "\n generation du code du fichier .h\n\n\n"
-    print "class ", oneObject.className, " :  { \n"
+    print "class ", oneObject.className, "  { \n"
     print "public : \n"
-    print oneObject.className + "();\n"
+    print "\t" + oneObject.className + "();\n"
     rtn = writeGetterAndSetter(oneObject)
     print "\n"
     rtn += writeFunctions(oneObject)
