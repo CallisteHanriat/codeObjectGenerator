@@ -31,7 +31,7 @@ def writeGetterAndSetter(oneObject) :
         typeDeDonnee =  oneObject.attributes[i].rsplit(' ', 1)[0]
         att =  oneObject.attributes[i].rsplit(' ', 1)[1]
         print "\t"+ typeDeDonnee + " " + "get"+ majFirstLetter(att)+ "() const;\n"
-        print "\t"+ "void set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" " + att +");\n"
+        print "\t"+ "void set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" &" + att +");\n"
         i = i+1
     return 0
 
@@ -83,7 +83,7 @@ def writeGetterAndSetterBody(oneObject) :
         print typeDeDonnee + " " + oneObject.className + "::get" + majFirstLetter(att)+ "() const {\n"
         print "\treturn this->" + att + ";\n"
         print "}\n"
-        print "void " + oneObject.className + "::set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" " + att +") {\n"
+        print "void " + oneObject.className + "::set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" &" + att +") {\n"
         print "\t"+ "this->" + att + "=" + att + ";\n"
         print "}\n"
         i = i+1
@@ -105,7 +105,7 @@ def writeDotCpp(oneObject):
     print "\n generation du code du .cpp\n\n\n"
     print '#include "' + oneObject.className + '.h"\n\n\n'
     print "//constructor\n"
-    print oneObject.className + "() \n{}\n"
+    print oneObject.className + "::" + oneObject.className + "() \n{}\n"
     rtn = writeGetterAndSetterBody(oneObject)
     rtn+= writeFunctionsCpp(oneObject)
     return rtn
