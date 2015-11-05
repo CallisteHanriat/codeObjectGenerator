@@ -36,17 +36,28 @@ def writeGetterAndSetter(oneObject) :
     return 0
 
 def writeFunctions(oneObject) :
-        i = 0
-        while i<len(oneObject.publicFunctions):
-            if ' ' not in oneObject.publicFunctions[i]:
-                print "error for : ", oneObject.publicFunctions[i], "no specified type.\n"
-                return 1
-            typeDeDonnee =  oneObject.publicFunctions[i].rsplit(' ', 1)[0]
-            functionName = oneObject.publicFunctions[i].rsplit(' ', 1)[1]
-            print "\t"+ typeDeDonnee + " " + functionName + "();\n"
-            i = i+1
-        return 0
+    i = 0
+    while i<len(oneObject.publicFunctions):
+        if ' ' not in oneObject.publicFunctions[i]:
+            print "error for : ", oneObject.publicFunctions[i], "no specified type.\n"
+            return 1
+        typeDeDonnee =  oneObject.publicFunctions[i].rsplit(' ', 1)[0]
+        functionName = oneObject.publicFunctions[i].rsplit(' ', 1)[1]
+        print "\t"+ typeDeDonnee + " " + functionName + "();\n"
+        i = i+1
+    return 0
 
+def writePrivateAttrs(oneObject):
+    i=0
+    while i<len(oneObject.attributes):
+        if ' ' not in oneObject.attributes[i]:
+            print "error for : ", oneObject.attributes[i], "no specified type.\n"
+            return 1
+        typeDeDonnee =  oneObject.attributes[i].rsplit(' ', 1)[0]
+        att = oneObject.attributes[i].rsplit(' ', 1)[1]
+        print "\t"+ typeDeDonnee + " " + att + ";\n"
+        i = i+1
+    return 0
 
 def writeDotH(oneObject) :
     print "\n generation du code du fichier .h\n\n\n"
@@ -55,5 +66,7 @@ def writeDotH(oneObject) :
     rtn = writeGetterAndSetter(oneObject)
     print "\n"
     rtn += writeFunctions(oneObject)
+    print "private :\n"
+    rtn+=writePrivateAttrs(oneObject)
     print "\n};"
     return rtn
