@@ -59,6 +59,17 @@ def writePrivateAttrs(oneObject):
         i = i+1
     return 0
 
+def writeOperatorCinAndCoutBody(oneObject):
+    car = oneObject.className[0].lower()
+    print "std::ostream& operator<<(std::ostream& flux, " + oneObject.className + " & " + car + ") {"
+    print  "\t" + car + ".afficher(flux);"
+    print "\treturn flux;"
+    print "}\n"
+    print "std::istream& operator>>(std::istream& flux, " + oneObject.className + " & " + car + ") {"
+    print  "\t" + car + ".saisir(flux);"
+    print "\treturn flux;"
+    print "}"
+
 def writeDotH(oneObject) :
     print "\n generation du code du fichier .h\n\n\n"
     print "class ", oneObject.className, "  { \n"
@@ -69,7 +80,10 @@ def writeDotH(oneObject) :
     rtn += writeFunctions(oneObject)
     print "private :\n"
     rtn+=writePrivateAttrs(oneObject)
-    print "\n};"
+    car = oneObject.className[0].lower()
+    print "\n};\n"
+    print "std::ostream& operator<<(std::ostream& flux, " + oneObject.className + " & " + car + ");"
+    print "std::istream& operator>>(std::istream& flux, " + oneObject.className + " & " + car + ");"
     return rtn
 
 def writeGetterAndSetterBody(oneObject) :
@@ -108,4 +122,5 @@ def writeDotCpp(oneObject):
     print oneObject.className + "::" + oneObject.className + "() \n{}\n"
     rtn = writeGetterAndSetterBody(oneObject)
     rtn+= writeFunctionsCpp(oneObject)
+    writeOperatorCinAndCoutBody(oneObject)
     return rtn
