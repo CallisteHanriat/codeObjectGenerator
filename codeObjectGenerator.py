@@ -1,5 +1,6 @@
 import string
 from functionPackage import *
+
 class OneClass(object):
     """docstring for OneClass"""
     def __init__(self, className, attributes, publicFunctions):
@@ -21,4 +22,7 @@ def main():
 
     if(writeDotH(myClass) == 0):
         print "\n\n\n\n\n//End of printing H."
+    if(writeDotCpp(myClass) == 0):
+        print "\n\n\n\n\n//End of printing H."
+
 main()

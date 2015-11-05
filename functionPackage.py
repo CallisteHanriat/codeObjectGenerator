@@ -63,10 +63,36 @@ def writeDotH(oneObject) :
     print "\n generation du code du fichier .h\n\n\n"
     print "class ", oneObject.className, " :  { \n"
     print "public : \n"
+    print oneObject.className + "();\n"
     rtn = writeGetterAndSetter(oneObject)
     print "\n"
     rtn += writeFunctions(oneObject)
     print "private :\n"
     rtn+=writePrivateAttrs(oneObject)
     print "\n};"
+    return rtn
+
+def writeGetterAndSetterBody(oneObject) :
+    i = 0
+    while i<len(oneObject.attributes):
+        if ' ' not in oneObject.attributes[i]:
+            print "error for : ", oneObject.attributes[i], "no specified type.\n"
+            return 1
+        typeDeDonnee =  oneObject.attributes[i].rsplit(' ', 1)[0]
+        att =  oneObject.attributes[i].rsplit(' ', 1)[1]
+        print typeDeDonnee + " " + oneObject.className + "::get" + majFirstLetter(att)+ "() const {\n"
+        print "\treturn this->" + att + ";\n"
+        print "}\n"
+        print "void " + oneObject.className + "::set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" " + att +") {\n"
+        print "\t"+ "this->" + att + "=" + att + ";\n"
+        print "}\n"
+        i = i+1
+    return 0
+
+def writeDotCpp(oneObject):
+    print "\n generation du code du .cpp\n\n\n"
+    print '#include "' + oneObject.className + '".h\n\n\n'
+    print "//constructor\n"
+    print oneObject.className + "() \n{}\n"
+    rtn = writeGetterAndSetterBody(oneObject)
     return rtn
