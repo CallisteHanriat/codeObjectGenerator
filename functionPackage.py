@@ -80,8 +80,8 @@ def writeDotH(oneObject) :
     rtn += writeFunctions(oneObject)
     print "private :\n"
     rtn+=writePrivateAttrs(oneObject)
-    car = oneObject.className[0].lower()
     print "\n};\n"
+    car = oneObject.className[0].lower()
     print "std::ostream& operator<<(std::ostream& flux, " + oneObject.className + " & " + car + ");"
     print "std::istream& operator>>(std::istream& flux, " + oneObject.className + " & " + car + ");"
     return rtn
