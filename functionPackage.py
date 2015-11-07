@@ -26,12 +26,12 @@ def writeGetterAndSetter(oneObject) :
     i = 0
     while i<len(oneObject.attributes):
         if ' ' not in oneObject.attributes[i]:
-            print "error for : ", oneObject.attributes[i], "no specified type.\n"
+            print "error for : ", oneObject.attributes[i], "no specified type."
             return 1
         typeDeDonnee =  oneObject.attributes[i].rsplit(' ', 1)[0]
         att =  oneObject.attributes[i].rsplit(' ', 1)[1]
-        print "\t"+ typeDeDonnee + " " + "get"+ majFirstLetter(att)+ "() const;\n"
-        print "\t"+ "void set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" &" + att +");\n"
+        print "\t"+ typeDeDonnee + " " + "get"+ majFirstLetter(att)+ "() const;"
+        print "\t"+ "void set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" &" + att +");"
         i = i+1
     return 0
 
@@ -39,11 +39,19 @@ def writeFunctions(oneObject) :
     i = 0
     while i<len(oneObject.publicFunctions):
         if ' ' not in oneObject.publicFunctions[i]:
-            print "error for : ", oneObject.publicFunctions[i], "no specified type.\n"
+            print "error for : ", oneObject.publicFunctions[i], "no specified type."
             return 1
-        typeDeDonnee =  oneObject.publicFunctions[i].rsplit(' ', 1)[0]
-        functionName = oneObject.publicFunctions[i].rsplit(' ', 1)[1]
-        print "\t"+ typeDeDonnee + " " + functionName + "();\n"
+        fonctionDecoupee = oneObject.publicFunctions[i].split(' ')
+        typeDeDonnee =  fonctionDecoupee[0]
+        functionName = fonctionDecoupee[1]
+
+
+
+        #if exists const for example void afficher const in console input
+        if len(fonctionDecoupee)>2:
+            print "\t"+ typeDeDonnee + " " + functionName + "() " + fonctionDecoupee[2] + ";"
+        else :
+            print "\t"+ typeDeDonnee + " " + functionName + "();"
         i = i+1
     return 0
 
@@ -72,15 +80,15 @@ def writeOperatorCinAndCoutBody(oneObject):
 
 def writeDotH(oneObject) :
     print "\n generation du code du fichier .h\n\n\n"
-    print "class ", oneObject.className, "  { \n"
+    print "class ", oneObject.className, "  { "
     print "public : \n"
-    print "\t" + oneObject.className + "();\n"
+    print "\t" + oneObject.className + "();"
     rtn = writeGetterAndSetter(oneObject)
     print "\n"
     rtn += writeFunctions(oneObject)
-    print "private :\n"
+    print "private :"
     rtn+=writePrivateAttrs(oneObject)
-    print "\n};\n"
+    print "};\n"
     car = oneObject.className[0].lower()
     print "std::ostream& operator<<(std::ostream& flux, " + oneObject.className + " & " + car + ");"
     print "std::istream& operator>>(std::istream& flux, " + oneObject.className + " & " + car + ");"
@@ -94,11 +102,11 @@ def writeGetterAndSetterBody(oneObject) :
             return 1
         typeDeDonnee =  oneObject.attributes[i].rsplit(' ', 1)[0]
         att =  oneObject.attributes[i].rsplit(' ', 1)[1]
-        print typeDeDonnee + " " + oneObject.className + "::get" + majFirstLetter(att)+ "() const {\n"
-        print "\treturn this->" + att + ";\n"
+        print typeDeDonnee + " " + oneObject.className + "::get" + majFirstLetter(att)+ "() const {"
+        print "\treturn this->" + att + ";"
         print "}\n"
-        print "void " + oneObject.className + "::set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" &" + att +") {\n"
-        print "\t"+ "this->" + att + "=" + att + ";\n"
+        print "void " + oneObject.className + "::set"+ majFirstLetter(att)+ "("+ typeDeDonnee +" &" + att +") {"
+        print "\t"+ "this->" + att + "=" + att + ";"
         print "}\n"
         i = i+1
     return 0
@@ -109,9 +117,17 @@ def writeFunctionsCpp(oneObject):
         if ' ' not in oneObject.publicFunctions[i]:
             print "error for : ", oneObject.publicFunctions[i], "no specified type.\n"
             return 1
-        typeDeDonnee =  oneObject.publicFunctions[i].rsplit(' ', 1)[0]
-        functionName = oneObject.publicFunctions[i].rsplit(' ', 1)[1]
-        print typeDeDonnee + " " + oneObject.className + "::" + functionName + "() {}\n"
+        fonctionDecoupee = oneObject.publicFunctions[i].split(' ')
+        typeDeDonnee =  fonctionDecoupee[0]
+        functionName = fonctionDecoupee[1]
+
+
+
+        #if exists const for example void afficher const in console input
+        if len(fonctionDecoupee)>2:
+            print typeDeDonnee + " " + oneObject.className + "::" + functionName + "() " + fonctionDecoupee[2] + " {}\n"
+        else :
+            print typeDeDonnee + " " + oneObject.className + "::" + functionName + "() {}\n"
         i = i+1
     return 0
 
