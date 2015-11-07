@@ -45,8 +45,6 @@ def writeFunctions(oneObject) :
         typeDeDonnee =  fonctionDecoupee[0]
         functionName = fonctionDecoupee[1]
 
-
-
         #if exists const for example void afficher const in console input
         if len(fonctionDecoupee)>2:
             print "\t"+ typeDeDonnee + " " + functionName + "() " + fonctionDecoupee[2] + ";"
@@ -69,7 +67,7 @@ def writePrivateAttrs(oneObject):
 
 def writeOperatorCinAndCoutBody(oneObject):
     car = oneObject.className[0].lower()
-    print "std::ostream& operator<<(std::ostream& flux, " + oneObject.className + " & " + car + ") {"
+    print "std::ostream& operator<<(std::ostream& flux, const " + oneObject.className + " & " + car + ") {"
     print  "\t" + car + ".afficher(flux);"
     print "\treturn flux;"
     print "}\n"
@@ -90,7 +88,7 @@ def writeDotH(oneObject) :
     rtn+=writePrivateAttrs(oneObject)
     print "};\n"
     car = oneObject.className[0].lower()
-    print "std::ostream& operator<<(std::ostream& flux, " + oneObject.className + " & " + car + ");"
+    print "std::ostream& operator<<(std::ostream& flux, const " + oneObject.className + " & " + car + ");"
     print "std::istream& operator>>(std::istream& flux, " + oneObject.className + " & " + car + ");"
     return rtn
 
@@ -120,8 +118,6 @@ def writeFunctionsCpp(oneObject):
         fonctionDecoupee = oneObject.publicFunctions[i].split(' ')
         typeDeDonnee =  fonctionDecoupee[0]
         functionName = fonctionDecoupee[1]
-
-
 
         #if exists const for example void afficher const in console input
         if len(fonctionDecoupee)>2:
